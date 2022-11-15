@@ -27,11 +27,12 @@ with mp_face_detection.FaceDetection(
     if results.detections:
       for detection in results.detections:
         mp_drawing.draw_detection(image, detection)
+      if count % 30 == 0:
+        print('Nose tip:')
+        print(mp_face_detection.get_key_point(results.detections[0], mp_face_detection.FaceKeyPoint.NOSE_TIP))
 
     cv2.imshow('MediaPipe Face Detection', cv2.flip(image, 1))
-    if count % 30 == 0:
-        print('Nose tip:')
-        print(mp_face_detection.get_key_point(detection, mp_face_detection.FaceKeyPoint.NOSE_TIP))
+    
 
     if cv2.waitKey(5) & 0xFF == 27:
       break
