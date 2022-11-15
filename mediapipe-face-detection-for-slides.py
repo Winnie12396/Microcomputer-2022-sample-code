@@ -34,12 +34,13 @@ with mp_face_detection.FaceDetection(
     if results.detections:
       for detection in results.detections:
         mp_drawing.draw_detection(image, detection)
+      # 30幀印一次鼻尖的座標；把最後的NOSE_TIP換掉則可印其他臉部關鍵點
+      if count % 30 == 0:
+        print('Nose tip:')
+        print(mp_face_detection.get_key_point(detection, mp_face_detection.FaceKeyPoint.NOSE_TIP))
 
     # 翻轉影像以得到正確視角
     cv2.imshow('MediaPipe Face Detection', cv2.flip(image, 1))
-    if count % 30 == 0:
-        print('Nose tip:')
-        print(mp_face_detection.get_key_point(detection, mp_face_detection.FaceKeyPoint.NOSE_TIP))
 
     # 按esc可退出
     if cv2.waitKey(5) & 0xFF == 27:
